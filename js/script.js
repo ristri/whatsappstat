@@ -34,6 +34,7 @@ window.onload = function () {
                     plotSenderGraph(count);
                     plotTimeGraph(time);
                     plotEmojiGraph(countEmoji);
+                    plotDayGraph(date);
                 }
                 fileReader.readAsText(fileTobeRead);
 
@@ -152,6 +153,38 @@ function plotEmojiGraph(countEmoji) {
             }
         }
     });
+}
+
+function plotDayGraph(date){
+    var day = [0,0,0,0,0,0,0];
+    date.forEach(element => {
+        day[moment(element,"DD/MM/YYYY").format("e")]++;
+    });
+    
+    var ctx = document.getElementById("myChart4").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+            datasets: [{
+                label: '# of Messages',
+                data: day,
+                backgroundColor: generateColors(7),
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    
 }
 
 function generateColors(n) {

@@ -73,7 +73,7 @@ function plotSenderGraph(count) {
     }
     var i = senderCount.indexOf(Math.max(...senderCount));
     senderText = document.getElementById("senderText");
-    senderText.innerHTML = senderName[i] + " " + senderCount[i];
+    senderText.innerHTML = senderName[i] + " Sent " + senderCount[i] + " Messages";
 
     var ctx = document.getElementById("senderChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -104,7 +104,7 @@ function plotTimeGraph(time) {
     var interval = ["12AM-1 AM", "1AM-2AM", "2AM-3AM", "3AM-4AM", "4AM-5AM", "5AM-6AM", "6AM-7AM", "7AM-8AM", "8AM-9AM", "9AM-10AM", "10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3PM-4PM", "4PM-5PM", "5PM-6PM", "6PM-7PM", "7PM-8PM", "8PM-9PM", "9PM-10PM", "10PM-11PM", "11PM-12AM"];
     var i = time.indexOf(Math.max(...time));
     var timeText = document.getElementById("timeText");
-    timeText.innerHTML = interval[i] + " " + time[i];
+    timeText.innerHTML = time[i] + " Messages Were Sent Between " + interval[i];
     var ctx = document.getElementById("timeChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
@@ -149,7 +149,7 @@ function plotEmojiGraph(countEmoji) {
     });
     var i = count.indexOf(Math.max(...count));
     var emojiText = document.getElementById("emojiText");
-    emojiText.innerHTML = emoji[i] + " " + count[i];
+    emojiText.innerHTML = emoji[i] + " Was Used " + count[i] + " Times";
     var ctx = document.getElementById("emojiChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -184,7 +184,7 @@ function plotDayGraph(date) {
 
     var i = day.indexOf(Math.max(...day));
     var dayText = document.getElementById("dayText");
-    dayText.innerHTML = dayName[i] + " " + day[i];
+    dayText.innerHTML = day[i] + " Messages Were Sent On " + dayName[i];
 
     var ctx = document.getElementById("dayChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -224,27 +224,16 @@ function generateColors(n) {
     return bgColor;
 }
 
-/*function export_pdf(){
-
-	var pdf = new jsPDF("p", "pt", "a4");
-	pdf.addHTML(document.getElementById("print-report"), 15, 15, function() {
-	  pdf.save('report.pdf');
-	});
-}*/
-
-//Creating dynamic link that automatically click
 function downloadURI(uri, name) {
     var link = document.createElement("a");
     link.download = name;
     link.href = uri;
     link.click();
-    //after creating link you should delete dynamic link
     //clearDynamicLink(link); 
 }
 
-//Your modified code.
 function printToFile() {
-    html2canvas(document.getElementById("print-report")).then(function (canvas) {
+    html2canvas(document.getElementById("print-report"),{background:"white"}).then(function (canvas) {
         var myImage = canvas.toDataURL("image/png");
         //create your own dialog with warning before saving file
         //beforeDownloadReadMessage();

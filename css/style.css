@@ -1,8 +1,23 @@
 .chart-cont{
-    width: 600px;
+    width: 100%;
     height: 400px;
+    display: block;
+    margin: auto;
+}
+.report-main{
+    max-width:800px;
+    background-color:#fafafa;
+    display: block;
+    margin: auto;
+}
+.chart-cont.time{
+    height:800px;
+}
+#report{
+    text-align: center;
 }
 #initial{
+
     height: 100vh;
 	display: -ms-flexbox;
 	display: -webkit-flex;
@@ -14,3 +29,11 @@
     justify-content: center;
     align-items: center;
 }
+.main{
+    background: url('../img/bg.jpeg');
+    position: relative;
+    box-shadow: inset 0 0 0 1000px rgba(74,189,172,0.8);
+}
+/*.text-info{
+    font-size: 30px;
+}*/

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="main">
         <div id="initial">
             <div class="card-panel">
                 Please Select text file of which contents are to be read:
@@ -33,27 +33,29 @@
             </div>
         </div>
         <div id="report">
-            <button class="waves-effect waves-light btn" onclick="printToFile()">PDF</button>
-            <div id="print-report">
-                <div id="senderText">
-                </div>
-                <div class="chart-cont">
-                    <canvas id="senderChart" width="640" height="400"></canvas>
-                </div>
-                <div id="timeText">
-                </div>
-                <div class="chart-cont">
-                    <canvas id="timeChart" width="640" height="400"></canvas>
-                </div>
-                <div id="emojiText">
-                </div>
-                <div class="chart-cont">
-                    <canvas id="emojiChart" width="640" height="400"></canvas>
-                </div>
-                <div id="dayText">
-                </div>
-                <div class="chart-cont">
-                    <canvas id="dayChart" width="640" height="400"></canvas>
+            <div class="card-panel report-main">
+                <button class="waves-effect waves-light btn" onclick="printToFile()">Save As Image</button>
+                <div id="print-report">
+                    <div id="senderText" class="card-panel flow-text">
+                    </div>
+                    <div class="chart-cont card-panel">
+                        <canvas id="senderChart" width="640" height="400"></canvas>
+                    </div>
+                    <div id="timeText" class="card-panel flow-text">
+                    </div>
+                    <div class="chart-cont card-panel time">
+                        <canvas id="timeChart" width="640" height="400"></canvas>
+                    </div>
+                    <div id="emojiText" class="card-panel flow-text">
+                    </div>
+                    <div class="chart-cont card-panel">
+                        <canvas id="emojiChart" width="640" height="400"></canvas>
+                    </div>
+                    <div id="dayText" class="card-panel flow-text">
+                    </div>
+                    <div class="chart-cont card-panel">
+                        <canvas id="dayChart" width="640" height="400"></canvas>
+                    </div>
                 </div>
             </div>
         </div>

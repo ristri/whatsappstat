@@ -1,10 +1,20 @@
-window.onload = function () { 
+window.onload = function () {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
+        Chart.plugins.register({
+            beforeDraw: function (chartInstance) {
+                var ctx = chartInstance.chart.ctx;
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+            }
+        });
+        var initial = document.getElementById("initial");
+        var report = document.getElementById("report")
+        report.style.display = "none";
         var fileSelected = document.getElementById('txtfiletoread');
         fileSelected.addEventListener('change', function (e) {
             var fileExtension = /text.*/;
-            var fileTobeRead = fileSelected.files[0]; 
-            if (fileTobeRead.type.match(fileExtension)) { 
+            var fileTobeRead = fileSelected.files[0];
+            if (fileTobeRead.type.match(fileExtension)) {
                 var fileReader = new FileReader();
                 fileReader.onload = function (e) {
                     var sender = fileReader.result.match(/[-](\s\w+)+[:]/g);
@@ -30,11 +40,12 @@ window.onload = function () {
                         else if (element.search(/[pP]/) != -1)
                             time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) == 12 ? 12 : Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) + 12]++;
                     });
-                    console.log(countEmoji);
                     plotSenderGraph(count);
                     plotTimeGraph(time);
                     plotEmojiGraph(countEmoji);
                     plotDayGraph(date);
+                    initial.style.display = "none";
+                    report.style.display = "block";
                 }
                 fileReader.readAsText(fileTobeRead);
 
@@ -53,7 +64,6 @@ window.onload = function () {
 function plotSenderGraph(count) {
     var senderName = [];
     var senderCount = [];
-    console.log(count);
     for (var key in count) {
         if (count.hasOwnProperty(key)) {
             if (key.match(/http/) == null)
@@ -61,8 +71,11 @@ function plotSenderGraph(count) {
             senderCount.push(count[key]);
         }
     }
+    var i = senderCount.indexOf(Math.max(...senderCount));
+    senderText = document.getElementById("senderText");
+    senderText.innerHTML = senderName[i] + " " + senderCount[i];
 
-    var ctx = document.getElementById("myChart").getContext('2d');
+    var ctx = document.getElementById("senderChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
@@ -88,11 +101,15 @@ function plotSenderGraph(count) {
 }
 
 function plotTimeGraph(time) {
-    var ctx = document.getElementById("myChart1").getContext('2d');
+    var interval = ["12AM-1 AM", "1AM-2AM", "2AM-3AM", "3AM-4AM", "4AM-5AM", "5AM-6AM", "6AM-7AM", "7AM-8AM", "8AM-9AM", "9AM-10AM", "10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3PM-4PM", "4PM-5PM", "5PM-6PM", "6PM-7PM", "7PM-8PM", "8PM-9PM", "9PM-10PM", "10PM-11PM", "11PM-12AM"];
+    var i = time.indexOf(Math.max(...time));
+    var timeText = document.getElementById("timeText");
+    timeText.innerHTML = interval[i] + " " + time[i];
+    var ctx = document.getElementById("timeChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
         data: {
-            labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+            labels: interval,
             datasets: [{
                 label: '# of Messages',
                 data: time,
@@ -119,18 +136,21 @@ function plotEmojiGraph(countEmoji) {
     var count = [];
     for (var key in countEmoji) {
         if (countEmoji.hasOwnProperty(key)) {
-            counter.push({emoji:key,value:countEmoji[key]});
+            counter.push({ emoji: key, value: countEmoji[key] });
         }
     }
     counter.sort(function (a, b) {
         return b.value - a.value
     })
-    counter=counter.splice(0,5);
+    counter = counter.splice(0, 5);
     counter.forEach(element => {
         emoji.push(element.emoji);
         count.push(element.value);
     });
-    var ctx = document.getElementById("myChart3").getContext('2d');
+    var i = count.indexOf(Math.max(...count));
+    var emojiText = document.getElementById("emojiText");
+    emojiText.innerHTML = emoji[i] + " " + count[i];
+    var ctx = document.getElementById("emojiChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -155,17 +175,22 @@ function plotEmojiGraph(countEmoji) {
     });
 }
 
-function plotDayGraph(date){
-    var day = [0,0,0,0,0,0,0];
+function plotDayGraph(date) {
+    var day = [0, 0, 0, 0, 0, 0, 0];
+    var dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     date.forEach(element => {
-        day[moment(element,"DD/MM/YYYY").format("e")]++;
+        day[moment(element, "DD/MM/YYYY").format("e")]++;
     });
-    
-    var ctx = document.getElementById("myChart4").getContext('2d');
+
+    var i = day.indexOf(Math.max(...day));
+    var dayText = document.getElementById("dayText");
+    dayText.innerHTML = dayName[i] + " " + day[i];
+
+    var ctx = document.getElementById("dayChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+            labels: dayName,
             datasets: [{
                 label: '# of Messages',
                 data: day,
@@ -184,7 +209,7 @@ function plotDayGraph(date){
             }
         }
     });
-    
+
 }
 
 function generateColors(n) {
@@ -197,4 +222,34 @@ function generateColors(n) {
         bgColor.push('rgba(' + String(r) + ',' + String(g) + ',' + String(b) + ', 0.5)');
     }
     return bgColor;
+}
+
+/*function export_pdf(){
+
+	var pdf = new jsPDF("p", "pt", "a4");
+	pdf.addHTML(document.getElementById("print-report"), 15, 15, function() {
+	  pdf.save('report.pdf');
+	});
+}*/
+
+//Creating dynamic link that automatically click
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    link.click();
+    //after creating link you should delete dynamic link
+    //clearDynamicLink(link); 
+}
+
+//Your modified code.
+function printToFile() {
+    html2canvas(document.getElementById("print-report")).then(function (canvas) {
+        var myImage = canvas.toDataURL("image/png");
+        //create your own dialog with warning before saving file
+        //beforeDownloadReadMessage();
+        //Then download file
+        downloadURI("data:" + myImage, "report.png");
+    }
+    );
 }

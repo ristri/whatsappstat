@@ -5,29 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>WhatsApp Stat</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    Please Select text file of which contents are to be read:
-    <input type="file" id="txtfiletoread" />
-    </div>
-    <div class="chart-cont">
-        <canvas id="myChart" width="640" height="400"></canvas>
-    </div>
-    <div class="chart-cont">
-        <canvas id="myChart1" width="640" height="400"></canvas>
-    </div>
-    <div class="chart-cont">
-        <canvas id="myChart3" width="640" height="400"></canvas>
-    </div>
-    <div class="chart-cont">
-        <canvas id="myChart4" width="640" height="400"></canvas>
+    <div class="container">
+        <div id="initial">
+            <div class="card-panel">
+                Please Select text file of which contents are to be read:
+                <!--<input class="file-field input-field" type="file" id="txtfiletoread" />-->
+                <form>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>
+                                <i class="large material-icons">file_upload</i>
+                            </span>
+                            <input type="file" id="txtfiletoread">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="report">
+            <button class="waves-effect waves-light btn" onclick="printToFile()">PDF</button>
+            <div id="print-report">
+                <div id="senderText">
+                </div>
+                <div class="chart-cont">
+                    <canvas id="senderChart" width="640" height="400"></canvas>
+                </div>
+                <div id="timeText">
+                </div>
+                <div class="chart-cont">
+                    <canvas id="timeChart" width="640" height="400"></canvas>
+                </div>
+                <div id="emojiText">
+                </div>
+                <div class="chart-cont">
+                    <canvas id="emojiChart" width="640" height="400"></canvas>
+                </div>
+                <div id="dayText">
+                </div>
+                <div class="chart-cont">
+                    <canvas id="dayChart" width="640" height="400"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <script src="js/script.js"></script>
+
 </body>
 
 </html>

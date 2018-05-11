@@ -3,7 +3,7 @@
  *  @author: Rishabh Tripathi
  *  @license: MIT
  */
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("report").style.display = "none";
 });
 window.onload = function () {
@@ -83,7 +83,7 @@ function plotSenderGraph(count) {
         }
     }
     totalText = document.getElementById("totalText");
-    totalText.innerHTML  = '<div class="high">'+total+'</div>'+"Messages Were Sent";
+    totalText.innerHTML = '<div class="high">' + total + '</div>' + "Messages Were Sent";
     var i = senderCount.indexOf(Math.max(...senderCount));
     senderText = document.getElementById("senderText");
     senderText.innerHTML = '<div class="high">' + senderCount[i] + '</div>' + "Messages Were Sent By " + senderName[i];
@@ -239,19 +239,22 @@ function generateColors(n) {
 
 function downloadURI(uri, name) {
     var link = document.createElement("a");
+    var div  = document.createElement("div");
+    var text = document.createTextNode("Click On The Link If Download Doesn't Start Automatically");
+    div.appendChild(text);
     link.download = name;
     link.href = uri;
-    link.click();
-    //clearDynamicLink(link); 
+    var textnode = document.createTextNode("Click Here");
+    link.appendChild(textnode);
+    document.getElementById("saveimg").appendChild(div);
+    document.getElementById("saveimg").appendChild(link);
+    link.dispatchEvent(new MouseEvent(`click`, {bubbles: true, cancelable: true, view: window}));
 }
 
 function printToFile() {
     document.getElementById("foot-cont").innerHTML = '<div class="flow-text" style="margin-top:30px">Generated Using WhatsApp Stat <div style="color:teal">www.ristri.com/whatsappstat</div></div>';
     html2canvas(document.getElementById("print-report"), { background: "white" }).then(function (canvas) {
         var myImage = canvas.toDataURL("image/png");
-        //create your own dialog with warning before saving file
-        //beforeDownloadReadMessage();
-        //Then download file
         downloadURI("data:" + myImage, "report.png");
     }
     );

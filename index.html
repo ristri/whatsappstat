@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WhatsApp Stat</title>
     <link href="https://fonts.googleapis.com/css?family=Londrina+Solid" rel="stylesheet">
-    <link href="https://unpkg.com/ionicons@4.0.0/dist/css/ionicons.min.css"rel="stylesheet"/>
+    <link href="https://unpkg.com/ionicons@4.0.0/dist/css/ionicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 
 <body>
@@ -34,15 +34,21 @@
                         </div>
                     </div>
                 </form>
+                <span id="colgreen">Privacy: </span>Your File Is Processed Locally And Not Sent To Any Server
             </div>
 
         </div>
         <div class="footer-copyright right-align">
-                    Made With <i class="icon ion-md-heart colred"></i> By <a href="https://ristri.com">Rishabh Tripathi</a>
-            </div>
+            Made With
+            <i class="icon ion-md-heart colred"></i> By
+            <a href="https://ristri.com">Rishabh Tripathi</a>
+        </div>
         <div id="report">
             <div class="card-panel report-main">
-                <button class="waves-effect waves-light btn" onclick="printToFile()">Save As Image</button>
+                    <button  class="waves-effect waves-light btn" onclick="printToFile()">Save As Image</button>
+                    <div id="saveimg">
+
+                    </div>
                 <div id="print-report">
                     <div id="totalText" class="flow-text text-cont">
                     </div>
@@ -68,16 +74,18 @@
                     </div>
                     <div id="foot-cont">
                     </div>
-                <div class="report-foot">
-                Made With <i class="icon ion-md-heart colred"></i> By <a href="https://ristri.com">Rishabh Tripathi</a>
+                    <div class="report-foot">
+                        Made With
+                        <i class="icon ion-md-heart colred"></i> By
+                        <a href="https://ristri.com">Rishabh Tripathi</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-    <script src="js/script.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+            <script src="js/script.min.js"></script>
 
 </body>
 

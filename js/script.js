@@ -47,6 +47,8 @@ window.onload = function () {
                             time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) % 12]++;
                         else if (element.search(/[pP]/) != -1)
                             time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) == 12 ? 12 : Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) + 12]++;
+                        else
+                            time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", ""))]++;
                     });
                     plotSenderGraph(count);
                     plotTimeGraph(time);
@@ -155,6 +157,7 @@ function plotEmojiGraph(countEmoji) {
     counter.sort(function (a, b) {
         return b.value - a.value
     })
+    if(counter.length>5)
     counter = counter.splice(0, 5);
     counter.forEach(element => {
         emoji.push(element.emoji);

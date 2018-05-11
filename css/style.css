@@ -1,3 +1,6 @@
+body{
+    font-family: 'Londrina Solid', cursive;
+}
 .chart-cont{
     width: 100%;
     height: 400px;
@@ -6,12 +9,14 @@
 }
 .report-main{
     max-width:800px;
-    background-color:#fafafa;
     display: block;
     margin: auto;
 }
 .chart-cont.time{
     height:800px;
+}
+.title{
+    color:teal;
 }
 #report{
     text-align: center;
@@ -28,12 +33,29 @@
 	-webkit-box-align: center;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 .main{
-    background: url('../img/bg.jpeg');
-    position: relative;
-    box-shadow: inset 0 0 0 1000px rgba(74,189,172,0.8);
+    background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
+    
 }
-/*.text-info{
-    font-size: 30px;
-}*/
+.text-cont{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.high{
+    font-size: 150%;
+    color: teal;
+}
+.footer-copyright{
+    margin-top: -22px;
+}
+.colred{
+    color:#f44336;
+}
+.report-foot{
+    margin-top:40px;
+}
+a:link a:active a:hover a:visited{
+    color:teal;
+}

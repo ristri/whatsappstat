@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WhatsApp Stat</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Londrina+Solid" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.0.0/dist/css/ionicons.min.css"rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,13 +16,16 @@
     <div class="main">
         <div id="initial">
             <div class="card-panel">
-                Please Select text file of which contents are to be read:
+                <div class="flow-text title">
+                    <h1>WhatsApp Stat</h1>
+                </div>
+                Please Select A WhatsApp Chat Log File ( .txt ):
                 <!--<input class="file-field input-field" type="file" id="txtfiletoread" />-->
                 <form>
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>
-                                <i class="large material-icons">file_upload</i>
+                                Choose File
                             </span>
                             <input type="file" id="txtfiletoread">
                         </div>
@@ -31,35 +35,45 @@
                     </div>
                 </form>
             </div>
+
         </div>
+        <div class="footer-copyright right-align">
+                    Made With <i class="icon ion-md-heart colred"></i> By <a href="https://ristri.com">Rishabh Tripathi</a>
+            </div>
         <div id="report">
             <div class="card-panel report-main">
                 <button class="waves-effect waves-light btn" onclick="printToFile()">Save As Image</button>
                 <div id="print-report">
-                    <div id="senderText" class="card-panel flow-text">
+                    <div id="totalText" class="flow-text text-cont">
                     </div>
-                    <div class="chart-cont card-panel">
+                    <div id="senderText" class="flow-text text-cont">
+                    </div>
+                    <div class="chart-cont ">
                         <canvas id="senderChart" width="640" height="400"></canvas>
                     </div>
-                    <div id="timeText" class="card-panel flow-text">
+                    <div id="timeText" class="flow-text text-cont">
                     </div>
-                    <div class="chart-cont card-panel time">
+                    <div class="chart-cont time">
                         <canvas id="timeChart" width="640" height="400"></canvas>
                     </div>
-                    <div id="emojiText" class="card-panel flow-text">
+                    <div id="emojiText" class="flow-text text-cont">
                     </div>
-                    <div class="chart-cont card-panel">
+                    <div class="chart-cont">
                         <canvas id="emojiChart" width="640" height="400"></canvas>
                     </div>
-                    <div id="dayText" class="card-panel flow-text">
+                    <div id="dayText" class="flow-text text-cont">
                     </div>
-                    <div class="chart-cont card-panel">
+                    <div class="chart-cont">
                         <canvas id="dayChart" width="640" height="400"></canvas>
                     </div>
-                </div>
+                    <div id="foot-cont">
+                    </div>
+                <div class="report-foot">
+                Made With <i class="icon ion-md-heart colred"></i> By <a href="https://ristri.com">Rishabh Tripathi</a>
             </div>
         </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>

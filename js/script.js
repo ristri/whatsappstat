@@ -1,3 +1,11 @@
+/**
+ *  (c) 2018 Rishabh Tripathi
+ *  @author: Rishabh Tripathi
+ *  @license: MIT
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("report").style.display = "none";
+});
 window.onload = function () {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         Chart.plugins.register({
@@ -8,7 +16,7 @@ window.onload = function () {
             }
         });
         var initial = document.getElementById("initial");
-        var report = document.getElementById("report")
+        var report = document.getElementById("report");
         report.style.display = "none";
         var fileSelected = document.getElementById('txtfiletoread');
         fileSelected.addEventListener('change', function (e) {
@@ -64,16 +72,21 @@ window.onload = function () {
 function plotSenderGraph(count) {
     var senderName = [];
     var senderCount = [];
+    var total = 0;
     for (var key in count) {
         if (count.hasOwnProperty(key)) {
-            if (key.match(/http/) == null)
+            if (key.match(/http/) == null) {
                 senderName.push(key);
-            senderCount.push(count[key]);
+                senderCount.push(count[key]);
+                total += count[key];
+            }
         }
     }
+    totalText = document.getElementById("totalText");
+    totalText.innerHTML  = '<div class="high">'+total+'</div>'+"Messages Were Sent";
     var i = senderCount.indexOf(Math.max(...senderCount));
     senderText = document.getElementById("senderText");
-    senderText.innerHTML = senderName[i] + " Sent " + senderCount[i] + " Messages";
+    senderText.innerHTML = '<div class="high">' + senderCount[i] + '</div>' + "Messages Were Sent By " + senderName[i];
 
     var ctx = document.getElementById("senderChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -104,7 +117,7 @@ function plotTimeGraph(time) {
     var interval = ["12AM-1 AM", "1AM-2AM", "2AM-3AM", "3AM-4AM", "4AM-5AM", "5AM-6AM", "6AM-7AM", "7AM-8AM", "8AM-9AM", "9AM-10AM", "10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3PM-4PM", "4PM-5PM", "5PM-6PM", "6PM-7PM", "7PM-8PM", "8PM-9PM", "9PM-10PM", "10PM-11PM", "11PM-12AM"];
     var i = time.indexOf(Math.max(...time));
     var timeText = document.getElementById("timeText");
-    timeText.innerHTML = time[i] + " Messages Were Sent Between " + interval[i];
+    timeText.innerHTML = '<div class="high">' + time[i] + '</div>' + " Messages Were Sent Between " + interval[i];
     var ctx = document.getElementById("timeChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
@@ -149,7 +162,7 @@ function plotEmojiGraph(countEmoji) {
     });
     var i = count.indexOf(Math.max(...count));
     var emojiText = document.getElementById("emojiText");
-    emojiText.innerHTML = emoji[i] + " Was Used " + count[i] + " Times";
+    emojiText.innerHTML = '<div class="high">' + emoji[i] + '</div>' + " Was Sent " + count[i] + " Times";
     var ctx = document.getElementById("emojiChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -184,7 +197,7 @@ function plotDayGraph(date) {
 
     var i = day.indexOf(Math.max(...day));
     var dayText = document.getElementById("dayText");
-    dayText.innerHTML = day[i] + " Messages Were Sent On " + dayName[i];
+    dayText.innerHTML = '<div class="high">' + day[i] + '</div>' + " Messages Were Sent On " + dayName[i];
 
     var ctx = document.getElementById("dayChart").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -233,7 +246,8 @@ function downloadURI(uri, name) {
 }
 
 function printToFile() {
-    html2canvas(document.getElementById("print-report"),{background:"white"}).then(function (canvas) {
+    document.getElementById("foot-cont").innerHTML = '<div class="flow-text" style="margin-top:30px">Generated Using WhatsApp Stat <div style="color:teal">www.ristri.com/whatsappstat</div></div>';
+    html2canvas(document.getElementById("print-report"), { background: "white" }).then(function (canvas) {
         var myImage = canvas.toDataURL("image/png");
         //create your own dialog with warning before saving file
         //beforeDownloadReadMessage();
@@ -241,4 +255,5 @@ function printToFile() {
         downloadURI("data:" + myImage, "report.png");
     }
     );
+    document.getElementById("foot-cont").style.display = "none";
 }

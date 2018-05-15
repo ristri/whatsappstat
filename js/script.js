@@ -25,34 +25,38 @@ window.onload = function () {
             if (fileTobeRead.type.match(fileExtension)) {
                 var fileReader = new FileReader();
                 fileReader.onload = function (e) {
-                    var sender = fileReader.result.match(/[-](\s\w+)+[:]/g);
+                    var sender = fileReader.result.match(/[-\]](\s\w+)+[:]/g);
                     var count = {};
                     var countEmoji = {};
-                    var datetime = fileReader.result.match(/(\d+\/\d+\/\d+)([^-]*)/g);
+                    var datetime = fileReader.result.match(/(\d+[\/.]\d+[\/.]\d+)([^-\]]*)/g);
                     var date = [];
                     var time = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                     var emoji = fileReader.result.match(/[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}\u{1f1e6}-\u{1f1ff}\u{1f191}-\u{1f251}\u{1f004}\u{1f0cf}\u{1f170}-\u{1f171}\u{1f17e}-\u{1f17f}\u{1f18e}\u{3030}\u{2b50}\u{2b55}\u{2934}-\u{2935}\u{2b05}-\u{2b07}\u{2b1b}-\u{2b1c}\u{3297}\u{3299}\u{303d}\u{00a9}\u{00ae}\u{2122}\u{23f3}\u{24c2}\u{23e9}-\u{23ef}\u{25b6}\u{23f8}-\u{23fa}]/ug)
                     sender.forEach(function (element, i) {
-                        sender[i] = sender[i].replace("- ", "").replace(":", "");
+                        sender[i] = sender[i].replace("- ", "").replace(":", "").replace(" ", "").replace("]","");
                     });
                     sender.forEach(element => {
                         count[element] = (count[element] || 0) + 1;
                     });
-                    emoji.forEach(element => {
-                        countEmoji[element] = (countEmoji[element] || 0) + 1;
-                    });
+                    console.log(emoji);
+                    if (emoji!==null) {
+                        emoji.forEach(element => {
+                            countEmoji[element] = (countEmoji[element] || 0) + 1;
+                        });
+                    }
                     datetime.forEach(element => {
-                        date.push(element.match(/\d+\/\d+\/\d+/g)[0]);
+                        date.push(element.match(/(\d+[\/.]\d+[\/.]\d+)/g)[0]);
                         if (element.search(/[aA]/) != -1)
-                            time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) % 12]++;
+                            time[Number(element.match(/[-+]?\s\d+:/g)[0].replace(":", "").replace(" ", "")) % 12]++;
                         else if (element.search(/[pP]/) != -1)
-                            time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) == 12 ? 12 : Number(element.match(/[-+]?\d+:/g)[0].replace(":", "")) + 12]++;
+                            time[Number(element.match(/[-+]?\s\d+:/g)[0].replace(":", "").replace(" ", "")) == 12 ? 12 : Number(element.match(/[-+]?\s\d+:/g)[0].replace(":", "").replace(" ", "")) + 12]++;
                         else
-                            time[Number(element.match(/[-+]?\d+:/g)[0].replace(":", ""))]++;
+                            time[Number(element.match(/[-+]?\s\d+:/g)[0].replace(":", "").replace(" ", ""))]++;
                     });
                     plotSenderGraph(count);
                     plotTimeGraph(time);
-                    plotEmojiGraph(countEmoji);
+                    if (emoji!==null)
+                        plotEmojiGraph(countEmoji);
                     plotDayGraph(date);
                     initial.style.display = "none";
                     report.style.display = "block";
@@ -157,8 +161,8 @@ function plotEmojiGraph(countEmoji) {
     counter.sort(function (a, b) {
         return b.value - a.value
     })
-    if(counter.length>5)
-    counter = counter.splice(0, 5);
+    if (counter.length > 5)
+        counter = counter.splice(0, 5);
     counter.forEach(element => {
         emoji.push(element.emoji);
         count.push(element.value);
@@ -195,7 +199,7 @@ function plotDayGraph(date) {
     var day = [0, 0, 0, 0, 0, 0, 0];
     var dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     date.forEach(element => {
-        day[moment(element, "DD/MM/YYYY").format("e")]++;
+        day[moment(element, ["DD/MM/YYYY", "MM/DD/YYYY", "DD-MM-YYYY", "MM-DD-YYYY", "DD.MM.YYYY", "MM.DD.YYYY", "DD-MM-YY", "MM-DD-YY", "DD.MM.YY", "MM.DD.YY", "DD/MM/YY", "MM/DD/YY"]).format("e")]++;
     });
 
     var i = day.indexOf(Math.max(...day));
@@ -242,7 +246,7 @@ function generateColors(n) {
 
 function downloadURI(uri, name) {
     var link = document.createElement("a");
-    var div  = document.createElement("div");
+    var div = document.createElement("div");
     var text = document.createTextNode("Click On The Link If Download Doesn't Start Automatically");
     div.appendChild(text);
     link.download = name;
@@ -251,7 +255,7 @@ function downloadURI(uri, name) {
     link.appendChild(textnode);
     document.getElementById("saveimg").appendChild(div);
     document.getElementById("saveimg").appendChild(link);
-    link.dispatchEvent(new MouseEvent(`click`, {bubbles: true, cancelable: true, view: window}));
+    link.dispatchEvent(new MouseEvent(`click`, { bubbles: true, cancelable: true, view: window }));
 }
 
 function printToFile() {

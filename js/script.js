@@ -38,7 +38,6 @@ window.onload = function () {
                     sender.forEach(element => {
                         count[element] = (count[element] || 0) + 1;
                     });
-                    console.log(emoji);
                     if (emoji!==null) {
                         emoji.forEach(element => {
                             countEmoji[element] = (countEmoji[element] || 0) + 1;
